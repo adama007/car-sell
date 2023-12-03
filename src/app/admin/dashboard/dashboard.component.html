@@ -1,0 +1,118 @@
+<!-- <div class="container py-5">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+      <div class="bg-white qhadow roundedp-4">
+        <h1 class="display-6 text-dark">Créer une annonce</h1>
+        <hr class="bg-dark mb-5">
+          <form #offerForm="ngForm"  (ngSubmit)="onSubmitOfferForm(offerForm)">
+            <div class="form-group mb-3">
+              <label for="offerTitleInput">Titre</label>
+              <input type="text" id="offerTitleInput" class="from-control" name="titre" ngModel>
+            </div>
+            <div class="form-group mb-3">
+              <label for="offerBrandInput">Marque</label>
+              <input type="text" id="offerBrandInput" class="from-control" name="marque" ngModel>
+            </div>
+            <div class="form-group mb-3">
+              <label for="offerModelInput">Modéle</label>
+              <input type="text" id="offerModelInput" class="from-control"name="Modele" ngModel>
+            </div>
+            <div class="form-group mb-3">
+              <label for="offerDescriptionInput">Description</label>
+              <textarea id="offerDescriptionInput" class="from-control"name="Description" ngModel></textarea>
+            </div>
+            <div class="form-group mb-3">
+              <label for="offerPriceInput">prix</label>
+              <input type="number" id="offerPriceInput" class="from-control"name="prix" ngModel>
+            </div>
+            <div class="d-flex">
+              <button type="submit"class="btn btn-success mx-auto">Enregistrer</button>    
+                   </div>
+
+          </form>
+          </div>
+          </div>
+          </div>
+          </div>
+        -->
+          <div class="container py-5">
+            <div class="row">
+              <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+                <div class="bg-white qhadow roundedp-4">
+                  <h1 class="display-6 text-dark">Créer une annonce</h1>
+                  <hr class="bg-dark mb-5">
+                    <form [formGroup]="offerForm" (ngSubmit)="onSubmitOfferForm()">
+                      <input type="string" formControlName="id" hidden>
+                      <div class="form-group mb-3">
+                        <label for="offerTitleInput">Titre</label>
+                        <input type="text" id="offerTitleInput" class="from-control" formControlName="title" >
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="offerBrandInput">Marque</label>
+                        <input type="text" id="offerBrandInput" class="from-control" formControlName="brand" appUppercaseInput>
+                      </div>
+                      <div class="px-3" *ngIf="currentOfferPhotoUrl && currentOfferPhotoUrl !=='' ">
+                      <img [src]="currentOfferPhotoUrl " alt="Offer photo" class="W-100 rounded" style="width:200px;height:100px">
+                    </div>
+                      <div class="mb-3">
+                        <label for="offerPhotoInput" class="form-label">Choisir Image</label>
+                        <input type="file" class="form-control" id="offerPhotoInput" formControlName="photo" (change)="OnChangeOfferPhoto($event)" >
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="offerModelInput">Modéle</label>
+                        <input type="text" id="offerModelInput" class="from-control"formControlName="model" >
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="offerDescriptionInput">Description</label>
+                        <textarea id="offerDescriptionInput" class="from-control"formControlName="description" ></textarea>
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="offerPriceInput">prix</label>
+                        <input type="number" id="offerPriceInput" class="from-control"formControlName="prix" >
+                      </div>
+                      <div class="d-flex">
+                        <button [disabled]="offerForm.invalid" type="submit"class="btn btn-success mx-auto">Enregistrer</button>    
+                             </div>
+          
+                    </form>
+                    </div>
+                    </div>
+                    </div>
+                    <br>
+                    <h1 class="display-6 dark">Annonces enregistrés</h1>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">title</th>
+                          <th scope="col">Marque</th>
+                          <th scope="col">photo</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">prix</th>
+                          <th scope="col" >Action</th>
+                          <th scope="col" ></th>
+
+
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let offer of offers,let i =index">
+                          <th scope="row">{{i}}</th>
+                          <td>{{ offer.title | firstCharUppercars}}</td>
+                          <td>{{offer.brand+' '+offer.model}}</td>
+                          <th>
+                            <img *ngIf="offer.photo" [src]="offer.photo | safeUrl" width="90">
+                          </th>
+                          <td>{{offer.description}}</td>
+                          <td>{{offer.prix}}</td>
+                          <td><button class="btn btn-primary"(click)="OnEditOffer(offer)">Modifier</button></td>
+                          <td><button class="btn btn-danger"(click)="Onsupprime(offer.id)">Supprimer</button></td>
+                        </tr>
+                     
+                      </tbody>
+                    </table>
+
+
+                    </div>
